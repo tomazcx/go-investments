@@ -8,6 +8,7 @@ import (
 )
 
 var ErrInvalidAccType = errors.New("Tipo inválido")
+var ErrInvalidAccDocument = errors.New("Documento inválido")
 
 const (
 	PhysicalPerson = iota
@@ -29,6 +30,14 @@ func NewAccount(forename string, surname string, email string, accType uint8, do
 		return nil, ErrInvalidAccType
 	}
 
+	if accType == 0 && len(documentId) != 11 {
+		return nil, ErrInvalidAccDocument
+	}
+
+	if accType == 1 && len(documentId) != 14 {
+		return nil, ErrInvalidAccDocument
+	}
+
 	encryptedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
@@ -42,6 +51,10 @@ func NewAccount(forename string, surname string, email string, accType uint8, do
 		DocumentID: documentId,
 		Password: string(encryptedPassword),
 	}, nil
+}
+
+func (a *Account) IsPasswordValid(password string) bool {
+	return bcrypt.CompareHashAndPassword([]byte(a.Password), []byte(password)) == nil
 }
 
 func (a *Account) GetName() string {
