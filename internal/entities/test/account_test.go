@@ -14,8 +14,9 @@ func TestCreateNewAccount_Success(t *testing.T){
 	accType := 0
 	password := "12345"
 	documentId := "18381387335"
+	initialBalance := 0.0
 
-	acc, err := entities.NewAccount(forename, surname, email, uint8(accType), documentId, password)
+	acc, err := entities.NewAccount(forename, surname, email, uint8(accType), documentId, password, float32(initialBalance))
 	assert.Nil(t, err)
 	assert.Equal(t, acc.Forename, forename)
 	assert.Equal(t, acc.Surname, surname)
@@ -33,16 +34,17 @@ func TestCreateNewAccount_Invalid_Type(t *testing.T){
 	accType := 2
 	password := "12345"
 	documentId := "18381387335"
+	initialBalance := 0.0
 
-	_, err := entities.NewAccount(forename, surname, email, uint8(accType), password, documentId)
+	_, err := entities.NewAccount(forename, surname, email, uint8(accType), password, documentId, float32(initialBalance))
 	assert.Equal(t, err, entities.ErrInvalidAccType)
 
 	accType = 1
-	_, err = entities.NewAccount(forename, surname, email, uint8(accType), password, documentId)
+	_, err = entities.NewAccount(forename, surname, email, uint8(accType), password, documentId, float32(initialBalance))
 	assert.Equal(t, err, entities.ErrInvalidAccDocument)
 
 	accType = 0
 	documentId = "18381387335324"
-	_, err = entities.NewAccount(forename, surname, email, uint8(accType), password, documentId)
+	_, err = entities.NewAccount(forename, surname, email, uint8(accType), password, documentId, float32(initialBalance))
 	assert.Equal(t, err, entities.ErrInvalidAccDocument)
 }

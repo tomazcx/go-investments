@@ -23,9 +23,10 @@ type Account struct {
 	Type     uint8
 	Password string
 	DocumentID string //CPF or CNPJ
+	Balance float32
 }
 
-func NewAccount(forename string, surname string, email string, accType uint8, documentId string, password string) (*Account, error) {
+func NewAccount(forename string, surname string, email string, accType uint8, documentId string, password string, initialBalance float32) (*Account, error) {
 	if accType < PhysicalPerson || accType > JuridicPerson {
 		return nil, ErrInvalidAccType
 	}
@@ -50,6 +51,7 @@ func NewAccount(forename string, surname string, email string, accType uint8, do
 		Type: accType,
 		DocumentID: documentId,
 		Password: string(encryptedPassword),
+		Balance: initialBalance,
 	}, nil
 }
 
