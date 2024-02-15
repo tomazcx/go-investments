@@ -35,3 +35,9 @@ func (uc *WithdrawUC) Execute(input accountio.WithdrawInput) (*accountio.Withdra
 		Timestamp: time.Now(),
 	}, nil
 }
+
+func NewWithdrawUC(repo repository.IAccountRepository) *WithdrawUC {
+	return &WithdrawUC{
+		repo: repo,
+	}
+}

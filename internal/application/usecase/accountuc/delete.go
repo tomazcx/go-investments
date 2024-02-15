@@ -11,3 +11,9 @@ type DeleteAccountUC struct {
 func (uc *DeleteAccountUC) Execute(id string) error {		
 	return uc.repo.Delete(id)
 }
+
+func NewDeleteAccountUC(repo repository.IAccountRepository) *DeleteAccountUC{
+	return &DeleteAccountUC{
+		repo: repo,
+	}
+}

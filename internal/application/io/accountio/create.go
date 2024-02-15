@@ -13,7 +13,7 @@ type CreateAccountInput struct {
 	InitialBalance float32
 	Password       string
 	Type           uint8
-	DocumentId     string
+	DocumentID     string
 }
 
 type CreateAccountOutput struct {

@@ -15,7 +15,7 @@ type CreateAccountUC struct {
 }
 
 func (uc *CreateAccountUC) Execute(input accountio.CreateAccountInput) (*accountio.CreateAccountOutput, error) {
-	emailExists, err := uc.repo.EmailExists(input.Email)	
+	emailExists, err := uc.repo.EmailExists(input.Email)
 
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (uc *CreateAccountUC) Execute(input accountio.CreateAccountInput) (*account
 		input.Surname,
 		input.Email,
 		input.Type,
-		input.DocumentId,
+		input.DocumentID,
 		input.Password,
 		input.InitialBalance,
 	)
@@ -42,7 +42,13 @@ func (uc *CreateAccountUC) Execute(input accountio.CreateAccountInput) (*account
 	createdAt, err := uc.repo.Create(acc)
 
 	return &accountio.CreateAccountOutput{
-		Account: acc,
+		Account:   acc,
 		CreatedAt: createdAt,
 	}, nil
+}
+
+func NewCreateAccountUC(repo repository.IAccountRepository) *CreateAccountUC {
+	return &CreateAccountUC{
+		repo: repo,
+	}
 }
