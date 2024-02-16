@@ -3,7 +3,7 @@
 
 MIGRATION_NAME =
 migrate.new: ## Create new migration
-	migrate create -ext=sql -dir=./internal/infra/database/migrations $(MIGRATION_NAME)
+	migrate create -ext=sql -dir=./internal/infra/db/migrations $(MIGRATION_NAME)
 
 migrate.up:  ## Run migrations up
 	migrate -source file:./internal/infra/db/migrations/ -database "postgres://root:root@db:5432/go-investments" up

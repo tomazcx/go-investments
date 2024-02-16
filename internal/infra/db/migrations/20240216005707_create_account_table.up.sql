@@ -2,7 +2,9 @@ CREATE TABLE IF NOT EXISTS account (
 	id UUID PRIMARY KEY,
 	forename VARCHAR(255),
 	surname VARCHAR(255),
-	balance DOUBLE
+	email VARCHAR(255) UNIQUE,
+	balance DOUBLE,
+	created_at TIMESTAMP DEFAULT(NOW())
 );
 
 CREATE TABLE IF NOT EXISTS document (
