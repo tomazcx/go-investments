@@ -8,7 +8,8 @@ import (
 	"github.com/tomazcx/go-investments/internal/entities"
 )
 
-var ErrCreatAccEmailAlreadyRegistered = errors.New("Email already registered")
+var ErrCreateAccEmailAlreadyRegistered = errors.New("Email já registrado")
+var ErrCreateAccDocumentAlreadyRegistered = errors.New("Email já registrado")
 
 type CreateAccountUC struct {
 	repo repository.IAccountRepository
@@ -22,7 +23,17 @@ func (uc *CreateAccountUC) Execute(input accountio.CreateAccountInput) (*account
 	}
 
 	if emailExists {
-		return nil, ErrCreatAccEmailAlreadyRegistered
+		return nil, ErrCreateAccEmailAlreadyRegistered
+	}
+
+	documentExists, err := uc.repo.DocumentExists(input.DocumentID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if documentExists {
+		return nil, ErrCreateAccDocumentAlreadyRegistered 
 	}
 
 	acc, err := entities.NewAccount(

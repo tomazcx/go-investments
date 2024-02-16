@@ -1,0 +1,10 @@
+version: "2"
+
+sql:
+  - engine: "postgresql"
+    queries: "internal/infra/db/queries"
+    schema: "internal/infra/db/migrations"
+    gen:
+      go: 
+        package: "query"
+        out: "internal/infra/db/sqlcnewBalance"

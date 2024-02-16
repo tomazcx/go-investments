@@ -22,6 +22,12 @@ func (m *AccountRepositoryMock) FindById(id string) (*entities.Account, error) {
 	return args.Get(0).(*entities.Account), args.Error(1)
 }
 
+
+func (m *AccountRepositoryMock) DocumentExists(document string) (bool, error) {
+	args := m.Called(document)
+	return args.Get(0).(bool), args.Error(1)
+}
+
 func (m *AccountRepositoryMock) EmailExists(email string) (bool, error) {
 	args := m.Called(email)
 	return args.Get(0).(bool), args.Error(1)
